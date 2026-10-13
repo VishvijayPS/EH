@@ -1,47 +1,50 @@
-# ETHICAL HACKING LAB 3
-# Footprinting Using Recon-ng
+# Ethical Hacking Lab 3: Recon-ng Footprinting
 
-## 1. Aim
+A practical passive reconnaissance lab focused on collecting publicly available information using Recon-ng and OSINT sources in Kali Linux.
 
-To perform passive footprinting using Recon-ng and collect publicly available information about target domains using OSINT (Open-Source Intelligence) sources.
+This project demonstrates how to perform domain footprinting ethically and responsibly while documenting the findings, tools, and limitations involved in reconnaissance.
 
-## 2. Objectives
+## Overview
+
+Footprinting is the process of collecting information about a target organization or domain before a formal security assessment begins. It helps identify:
+
+- Domain names and subdomains
+- Publicly exposed hostnames
+- DNS and certificate data
+- Domain registration information
+- Public threat-intelligence context
+
+Recon-ng is an open-source OSINT framework that consolidates reconnaissance tasks into a modular environment. In this lab, the focus is on passive information gathering using authorized public sources, without exploiting systems or bypassing protections.
+
+## Objectives
 
 - Understand the concept of passive footprinting.
 - Install and configure Recon-ng in Kali Linux.
 - Create and manage workspaces.
-- Search, install, and execute Recon-ng modules.
-- Collect publicly available hostname and domain information.
-- Explore HackerTarget, Certificate Transparency, Netcraft, WHOIS, and threat-intelligence sources.
-- Analyze and document the collected results.
+- Search, install, and run Recon-ng modules.
+- Collect public hostname and domain information.
+- Use OSINT sources such as HackerTarget, Certificate Transparency, Netcraft, WHOIS, and threat-intelligence services.
+- Analyze and document results responsibly.
 
-## 3. Requirements
+## Requirements
 
-### Hardware Requirements
-- Computer or laptop
+### Hardware
+
+- Laptop or desktop computer
 - Minimum 4 GB RAM recommended
-- Internet connection
+- Stable internet connection
 
-### Software Requirements
+### Software
+
 - Kali Linux
 - Recon-ng framework
-- Terminal
+- Terminal access
 - Public OSINT sources
-- WHOIS utility (optional)
+- WHOIS utility (optional but recommended)
 
-## 4. Introduction
+## Target Domains
 
-Footprinting is the process of collecting information about a target organization or domain before conducting a security assessment.
-
-OSINT stands for Open-Source Intelligence. It involves gathering information from publicly accessible sources such as DNS records, certificate logs, domain registration information, and public threat-intelligence databases.
-
-Recon-ng is an open-source reconnaissance framework that provides a modular command-line environment for collecting and organizing OSINT information.
-
-This experiment focuses on passive reconnaissance. It does not involve exploiting vulnerabilities, bypassing authentication, or attempting unauthorized access.
-
-## 5. Target Organizations
-
-The following domains are used for this experiment:
+The lab uses the following domains:
 
 | No. | Organization | Target Domain |
 |---|---|---|
@@ -52,51 +55,53 @@ The following domains are used for this experiment:
 | 5 | Internet Engineering Task Force (IETF) | ietf.org |
 | 6 | Wikipedia | wikipedia.org |
 
-## 6. OSINT Sources
+## OSINT Sources Used
 
 | OSINT Source | Purpose |
 |---|---|
 | HackerTarget | Discover publicly reported hostnames associated with a domain |
-| Certificate Transparency | Identify hostnames appearing in publicly logged TLS certificates |
-| Netcraft | Obtain publicly available website and hostname information where supported |
-| WHOIS | Examine available domain-registration information |
-| Threat Intelligence | Check public reports and indicators associated with suspicious infrastructure |
+| Certificate Transparency | Identify hostnames found in public TLS certificate logs |
+| Netcraft | Gather public website and hosting information |
+| WHOIS | Review available domain registration information |
+| Threat Intelligence | Check public reports on suspicious infrastructure |
 
-**Note:** The availability of each source depends on the current service, module version, and API requirements. Not every source is accessible through a working Recon-ng module in every installation.
+> Note: Source availability varies by service, module version, and API restrictions. Not every source will work in every environment.
 
-## 7. Installation and Setup
+## Installation and Setup
 
-### Step 1: Open Kali Linux Terminal
+### 1. Open the terminal
 
-Press `Ctrl + Alt + T` to open the terminal.
+```bash
+Ctrl + Alt + T
+```
 
-### Step 2: Check Internet Connectivity
+### 2. Check internet connectivity
 
 ```bash
 ping -c 4 google.com
 ```
 
-Successful replies indicate that internet connectivity and DNS resolution are working.
+Successful replies confirm that internet access and DNS resolution are working.
 
-### Step 3: Update Package Information
+### 3. Update the package list
 
 ```bash
 sudo apt update
 ```
 
-### Step 4: Install Recon-ng
+### 4. Install Recon-ng
 
 ```bash
 sudo apt install recon-ng
 ```
 
-### Step 5: Verify Installation
+### 5. Verify the installation
 
 ```bash
 recon-ng --version
 ```
 
-If the version option is unsupported, launch Recon-ng directly:
+If the version flag is unsupported, start Recon-ng directly:
 
 ```bash
 recon-ng
@@ -108,119 +113,78 @@ The framework should display a prompt similar to:
 [recon-ng][default] >
 ```
 
-## 8. Recon-ng Workspace Configuration
+## Recon-ng Workspace Configuration
 
-A workspace stores reconnaissance results separately for a particular experiment.
+A workspace keeps reconnaissance results organized for each experiment.
 
-### Step 1: Display Available Commands
+### Basic workflow
 
 ```text
 help
-```
-
-### Step 2: Search for Modules
-
-```text
 modules search domains
-```
-
-### Step 3: Search the Marketplace
-
-```text
 marketplace search hackertarget
-```
-
-### Step 4: Install the HackerTarget Module
-
-```text
 marketplace install recon/domains-hosts/hackertarget
-```
-
-Use the exact module path shown by the marketplace if the path differs.
-
-### Step 5: Create a Workspace
-
-```text
 workspaces create Demo1
-```
-
-### Step 6: List Available Workspaces
-
-```text
 workspaces list
-```
-
-### Step 7: Load the Workspace
-
-```text
 workspaces load Demo1
 ```
 
-The prompt should now resemble:
+The prompt should change to:
 
 ```text
 [recon-ng][Demo1] >
 ```
 
-## 9. Footprinting Using HackerTarget
+## Footprinting Using HackerTarget
 
-### Step 1: Load the Module
+### 1. Load the module
 
 ```text
 modules load recon/domains-hosts/hackertarget
 ```
 
-### Step 2: Read Module Information
+### 2. View the module information
 
 ```text
 info
-```
-
-### Step 3: View Configuration Options
-
-```text
 options list
 ```
 
-### Step 4: Set the Target Domain
+### 3. Set the target domain
 
 ```text
 options set SOURCE kali.org
 ```
 
-### Step 5: Verify the Target
+### 4. Confirm the configuration
 
 ```text
 options list
 ```
 
-Confirm that `SOURCE` is set to `kali.org`.
-
-### Step 6: Execute the Module
+### 5. Run the module
 
 ```text
 run
 ```
 
-### Step 7: Return to the Workspace
+### 6. Return to the workspace
 
 ```text
 back
 ```
 
-### Step 8: Display Discovered Hosts
+### 7. Display discovered hosts
 
 ```text
 show hosts
 ```
 
-The output may contain hostnames and associated information returned by the source. If the module returns no results or reports an error, record the actual outcome.
+This output may include hostnames and related metadata returned by the source. If the module fails or returns nothing, record the actual outcome.
 
-## 10. Repeat for All Target Domains
+## Repeat for All Target Domains
 
-Run the following sequence for each domain.
-
-### Kali Linux
+Run the same process for each domain:
 
 ```text
 modules load recon/domains-hosts/hackertarget
@@ -229,8 +193,6 @@ run
 back
 show hosts
 ```
-
-### Debian
 
 ```text
 modules load recon/domains-hosts/hackertarget
@@ -240,8 +202,6 @@ back
 show hosts
 ```
 
-### Linux Foundation
-
 ```text
 modules load recon/domains-hosts/hackertarget
 options set SOURCE linuxfoundation.org
@@ -249,8 +209,6 @@ run
 back
 show hosts
 ```
-
-### Mozilla
 
 ```text
 modules load recon/domains-hosts/hackertarget
@@ -260,8 +218,6 @@ back
 show hosts
 ```
 
-### IETF
-
 ```text
 modules load recon/domains-hosts/hackertarget
 options set SOURCE ietf.org
@@ -269,8 +225,6 @@ run
 back
 show hosts
 ```
-
-### Wikipedia
 
 ```text
 modules load recon/domains-hosts/hackertarget
@@ -280,105 +234,65 @@ back
 show hosts
 ```
 
-Repeat the procedure for the remaining OSINT sources when suitable modules are available.
+## Certificate Transparency
 
-## 11. Certificate Transparency
+Certificate Transparency logs publicly visible TLS certificate records, which can reveal hostnames and subdomains.
 
-Certificate Transparency provides publicly accessible logs of issued TLS certificates. Certificate records can contain domain names and subdomains.
-
-### Step 1: Search for a Suitable Module
+### Search for availability
 
 ```text
 marketplace search certificate_transparency
 ```
 
-### Step 2: Install the Module
-
-Use the exact module path returned by the marketplace. If the following path exists:
-
-```text
-recon/domains-hosts/certificate_transparency
-```
-
-install it using:
+### Install the module if available
 
 ```text
 marketplace install recon/domains-hosts/certificate_transparency
 ```
 
-### Step 3: Load and Inspect the Module
+### Load and execute
 
 ```text
 modules load recon/domains-hosts/certificate_transparency
 info
 options list
-```
-
-### Step 4: Configure and Execute
-
-```text
 options set SOURCE kali.org
 run
 back
 show hosts
 ```
 
-Repeat for other domains if the module supports them.
+Repeat the process for other domains if supported by the module.
 
-## 12. Netcraft Footprinting
+## Netcraft Footprinting
 
-Netcraft is a source of publicly available website and hosting information.
-
-### Step 1: Search for a Module
+Netcraft provides public website and hosting information.
 
 ```text
 marketplace search netcraft
-```
-
-### Step 2: Install the Available Module
-
-Use the exact module path returned by the search. For example, if available:
-
-```text
 marketplace install recon/domains-hosts/netcraft
-```
-
-### Step 3: Load and Inspect It
-
-```text
 modules load recon/domains-hosts/netcraft
 info
 options list
-```
-
-### Step 4: Set the Target and Execute
-
-```text
 options set SOURCE kali.org
 run
 back
 show hosts
 ```
 
-If the module is unavailable or incompatible with the current service, document the issue and use another supported public source.
+If the module is unavailable or incompatible, document the issue and use another supported source.
 
-## 13. WHOIS Information Gathering
+## WHOIS Information Gathering
 
-WHOIS can provide registration-related information such as the registrar, registration dates, and name servers, subject to registry policies and privacy protection.
+WHOIS may reveal domain registration details such as the registrar, creation date, and nameservers, subject to registry policies and privacy protections.
 
-If the WHOIS utility is unavailable, exit Recon-ng:
-
-```text
-exit
-```
-
-Install the utility in the Kali terminal:
+### Install the WHOIS utility
 
 ```bash
 sudo apt install whois
 ```
 
-Query the domain:
+### Query a domain
 
 ```bash
 whois kali.org
@@ -394,72 +308,47 @@ whois ietf.org
 whois wikipedia.org
 ```
 
-Record the information actually returned. Some domains may use privacy protection or registry services that limit the available details.
+## Threat Intelligence
 
-## 14. Threat Intelligence
+Threat intelligence helps determine whether a domain or associated infrastructure has been reported as suspicious in public security feeds or reports.
 
-Threat intelligence involves examining public security reports and indicators to determine whether domains or associated infrastructure have been reported as suspicious.
-
-### Step 1: Search Recon-ng Modules
-
-Inside Recon-ng, enter:
+### Search modules
 
 ```text
 marketplace search threat
 ```
 
-Review the available modules and their documentation.
-
-### Step 2: Check Module Requirements
+### Review module requirements
 
 ```text
 info
 options list
 ```
 
-Some providers require API keys or accounts. Configure them only according to the provider's documented requirements.
+Some providers may require API keys or accounts. Configure them only under authorized and documented conditions.
 
-### Step 3: Record Findings
+Document the following for each domain:
 
-For each domain, document:
-
-- Source or provider used
-- Date of the lookup
+- Provider or source used
+- Date of lookup
 - Indicator or report returned
 - Whether the result was verified
-- Any errors or unavailable services
+- Any errors or service limitations
 
-A missing threat report does not prove that a domain or its infrastructure is completely safe.
+## Viewing and Verifying Results
 
-## 15. Viewing and Verifying Results
-
-### Display Hosts
+Use the following commands to inspect collected data:
 
 ```text
 show hosts
-```
-
-### Display Domains
-
-```text
 show domains
-```
-
-### Display Contacts
-
-```text
 show contacts
-```
-
-### Display Database Schema
-
-```text
 db schema
 ```
 
-The available tables and records depend on the modules used and the information collected. Empty tables are possible.
+The available tables and records depend on the modules used and the information collected. Empty output is possible and should be documented accurately.
 
-## 16. Important Recon-ng Commands
+## Useful Recon-ng Commands
 
 | Command | Purpose |
 |---|---|
@@ -471,86 +360,83 @@ The available tables and records depend on the modules used and the information 
 | `marketplace search hackertarget` | Search the marketplace |
 | `marketplace install <module-path>` | Install a module |
 | `modules load <module-path>` | Load a module |
-| `info` | View module information |
+| `info` | View module details |
 | `options list` | View configuration options |
 | `options set SOURCE kali.org` | Set the target domain |
 | `run` | Execute the loaded module |
 | `back` | Return to the previous prompt |
-| `show hosts` | Display discovered host records |
-| `db schema` | Display database structure |
+| `show hosts` | Display discovered hosts |
+| `db schema` | Display database schema |
 | `exit` | Exit Recon-ng |
 
-## 17. Troubleshooting
+## Troubleshooting
 
-### Problem 1: No Modules Found
+### No modules found
 
-**Solution:** Search the marketplace and install the required module.
+Search the marketplace and install the required module:
 
 ```text
 marketplace search hackertarget
 ```
 
-### Problem 2: Module Not Found
+### Module not found
 
-**Solution:** Copy the exact module path returned by the marketplace. Check spelling and module availability.
+Double-check the exact module path returned by the marketplace and ensure the module is available.
 
-### Problem 3: Missing API Key
+### Missing API key
 
-**Solution:** Read the module information and configure the required provider credentials if you have authorized access.
+Read the module documentation and configure credentials only if you have authorized access.
 
-### Problem 4: No Hosts Discovered
+### No hosts discovered
 
-**Solution:**
-- Verify the target using `options list`.
-- Confirm that the module ran successfully.
-- Check internet connectivity.
-- Try another available public source.
-- Record an empty result if no records are returned.
+- Verify the target value with `options list`
+- Confirm the module executed successfully
+- Check internet connectivity
+- Try another public source
+- Record an empty result if no data is returned
 
-### Problem 5: WHOIS Command Not Found
-
-**Solution:**
+### WHOIS command not found
 
 ```bash
 sudo apt install whois
 ```
 
-### Problem 6: Threat-Intelligence Module Unavailable
+### Threat-intelligence module unavailable
 
-**Solution:** Record the unavailable module and use a supported public threat-intelligence source if your lab permits it.
+Document the issue and use another supported public source if your lab environment allows it.
 
-## 18. Screenshots to Include
+## Screenshots to Include
 
-Capture the following screenshots for the lab record:
+Capture the following for the lab record:
 
-1. Kali Linux terminal and internet connectivity.
-2. Recon-ng installation and startup.
-3. Marketplace module search.
-4. Workspace creation and loading.
-5. HackerTarget module information and options.
-6. Module execution and discovered host records.
-7. Certificate Transparency module and results, if available.
-8. Netcraft module and results, if available.
-9. WHOIS command output.
-10. Threat-intelligence source or module results.
-11. Final `show hosts` output.
+1. Kali Linux terminal and internet connectivity
+2. Recon-ng installation and startup
+3. Marketplace module search
+4. Workspace creation and loading
+5. HackerTarget module information and options
+6. Module execution and discovered host records
+7. Certificate Transparency module and results, if available
+8. Netcraft module and results, if available
+9. WHOIS command output
+10. Threat-intelligence source or module results
+11. Final `show hosts` output
 
-Screenshots should show actual command output. Do not add fabricated hostnames or results.
+## Results
 
-## 19. Result
+Passive footprinting was performed using Recon-ng and public OSINT sources for the six assigned domains. The actual hostnames, domain-registration data, and intelligence findings were recorded only when returned by the source. All results were documented accurately and without fabrication.
 
-Passive footprinting was conducted using Recon-ng and available public OSINT sources for the six assigned domains. The actual hostnames and domain-registration or intelligence information returned by the tools were recorded for analysis. Source availability, module support, and API requirements affected the results.
+## Conclusion
 
-## 20. Conclusion
+This lab introduced the use of Recon-ng for passive footprinting and OSINT collection. It provided hands-on experience with installing modules, managing workspaces, configuring target domains, and analyzing public information sources. The exercise also highlighted the importance of source verification, accurate documentation, and responsible use of reconnaissance tools.
 
-This experiment demonstrated the use of Recon-ng for passive footprinting and OSINT collection. It provided practical experience with installing modules, managing workspaces, configuring target domains, executing reconnaissance modules, and examining collected information.
+## Ethical Considerations
 
-The experiment also demonstrated the importance of verifying OSINT findings and documenting source limitations during a cybersecurity assessment.
-
-## 21. Ethical Considerations
-
-- Use public information responsibly.
-- Perform reconnaissance only for legitimate educational or authorized security purposes.
+- Use only public information obtained with proper authorization or educational intent.
+- Perform reconnaissance only for legitimate security learning and approved assessments.
 - Do not attempt unauthorized access or exploitation.
-- Respect the terms of service and usage limits of external sources.
-- Do not treat unverified intelligence results as confirmed security findings.
+- Respect the terms of service and rate limits of external sources.
+- Treat unverified intelligence as non-confirmed information until validated.
+
+## Project Status
+
+This repository is intended for educational and experimental use in a legal, ethical, and authorized cybersecurity context.
