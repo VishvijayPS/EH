@@ -1,40 +1,51 @@
-# Experiment 1: Network Traffic Capture and Analysis Using Wireshark
+# Ethical Hacking Lab: Network Traffic Capture and Analysis with Wireshark
 
-## Aim
-To capture and analyze network traffic using Wireshark and gain hands-on experience with the OSI model and TCP/IP protocol suite.
+A practical lab focused on capturing, inspecting, and analyzing network traffic using Wireshark in a controlled and authorized environment.
 
-## Objective
-- Understand the basics of network packet analysis.
-- Capture live network traffic using Wireshark.
-- Identify source IP, destination IP, protocols, packet length, and timestamps.
-- Analyze TCP, DNS, and ICMP packets using display filters.
-- Understand how network communication works.
-- Save captured network traffic in `.pcapng` format for future analysis.
+This project introduces the fundamentals of packet-level analysis, helping learners understand how network communication works at the protocol level and how tools like Wireshark can be used for troubleshooting and security analysis.
 
-## Tool Used
-**Wireshark** – An open-source network protocol analyzer used to capture and inspect packets transmitted over a network.
+## Overview
 
-Official website: https://www.wireshark.org/
+Wireshark is a network protocol analyzer used to capture and inspect packets on a local network. It helps identify:
 
-## Introduction
-Wireshark is a network protocol analyzer that allows users to capture and examine network packets in real time. It provides detailed information about network communication, including source and destination addresses, protocols, packet lengths, and other packet details.
+- source and destination IP addresses
+- protocols in use
+- packet timestamps and lengths
+- TCP, UDP, DNS, ICMP, and HTTP traffic
+- application-level and transport-level behavior
 
-Wireshark is widely used in network troubleshooting, cybersecurity, ethical hacking, and digital forensics.
+In this experiment, live traffic is captured, filtered, and analyzed to understand the structure of network communication. The goal is educational and ethical, limited to authorized networks and systems.
+
+## Objectives
+
+- Understand the basics of packet capture and analysis.
+- Install and open Wireshark in Kali Linux.
+- Select an appropriate network interface.
+- Capture live traffic safely and ethically.
+- Identify key packet fields such as source, destination, protocol, and length.
+- Apply Wireshark display filters for TCP, UDP, DNS, ICMP, and HTTP traffic.
+- Save the capture in `.pcapng` format for later review.
+- Document observations from the packet analysis.
+
+## Tools and Technologies
+
+- Wireshark
+- Kali Linux
+- Network interface (Wi-Fi or Ethernet)
+- Terminal
+- Authorized local network or test environment
 
 ## Requirements
-- Windows or Kali Linux operating system
-- Wireshark installed on the system
-- An active Wi-Fi or Ethernet connection
-- Internet connection (optional for offline packet analysis)
 
-## Procedure
+- A Kali Linux installation or compatible system
+- Wireshark installed and configured
+- An active network connection
+- Permission to capture traffic on the network being analyzed
+- Optional internet access for general browsing and traffic generation
 
-### Step 1: Install and Open Wireshark
-1. Download Wireshark from the official website: https://www.wireshark.org/download.html
-2. Install Wireshark by following the installation instructions.
-3. Open Wireshark.
+## Installation
 
-On Kali Linux, you can install it using:
+On Kali Linux, install Wireshark using:
 
 ```bash
 sudo apt update
@@ -47,109 +58,132 @@ Launch Wireshark:
 wireshark
 ```
 
-### Step 2: Select a Network Interface
-1. Open Wireshark.
-2. Identify the active network interface, such as Wi-Fi, Ethernet, or a wireless interface.
-3. Double-click the active interface to start capturing packets.
+## Capturing Network Traffic
 
-### Step 3: Generate Network Traffic
-1. Open a web browser.
-2. Visit a website or perform a normal internet activity.
-3. Return to Wireshark and observe the captured packets.
+### 1. Start Wireshark
 
-Only capture traffic on networks and devices you own or have permission to analyze.
+Open the application and choose an active interface such as:
 
-### Step 4: Observe Captured Packets
-The packet list displays information such as:
+- Wi-Fi
+- Ethernet
+- Virtual network adapter
+
+Double-click the interface to begin capturing packets.
+
+### 2. Generate network traffic
+
+Open a browser or perform a normal network activity on an authorized system, such as:
+
+- loading a page
+- performing a DNS lookup
+- sending a ping request
+
+Then return to Wireshark to observe the captured traffic.
+
+> Only capture network traffic on networks and devices that you own or are authorized to analyze.
+
+### 3. Observe captured packets
+
+The packet list shows fields such as:
 
 | Field | Description |
 |---|---|
 | No. | Packet number |
-| Time | Time the packet was captured |
-| Source | Sender's IP address or hostname |
-| Destination | Receiver's IP address or hostname |
-| Protocol | Protocol used for communication |
-| Length | Size of the packet |
-| Info | Brief description of packet activity |
+| Time | Capture time |
+| Source | Sender address |
+| Destination | Receiver address |
+| Protocol | Network protocol used |
+| Length | Packet size |
+| Info | Brief summary of the packet |
 
-### Step 5: Inspect Individual Packets
-1. Select any packet from the packet list.
-2. Examine the Packet Details pane.
-3. Expand the relevant protocol sections.
-4. Observe the Ethernet, IP, TCP, UDP, DNS, or ICMP fields, depending on the selected packet.
+### 4. Inspect individual packets
 
-### Step 6: Apply Display Filters
-Enter the following filters in the display filter bar and press Enter.
+Select a packet and review:
 
-**Display TCP packets:**
+- Packet Details pane
+- Ethernet information
+- IP header
+- TCP or UDP details
+- DNS, ICMP, or HTTP details if present
+
+## Display Filters
+
+Use the display filter bar to narrow the traffic shown.
+
+### TCP packets
 
 ```text
 tcp
 ```
 
-**Display DNS packets:**
+### DNS packets
 
 ```text
 dns
 ```
 
-**Display ICMP packets:**
+### ICMP packets
 
 ```text
 icmp
 ```
 
-**Display UDP packets:**
+### UDP packets
 
 ```text
 udp
 ```
 
-**Display HTTP packets:**
+### HTTP packets
 
 ```text
 http
 ```
 
-**Display traffic to or from a particular IP address:**
+### Traffic involving a specific IP
 
 ```text
 ip.addr == 192.168.1.10
 ```
 
-Replace `192.168.1.10` with an IP address relevant to your capture.
+Replace the IP address with one relevant to your lab environment.
 
-Note: Display filters only change which captured packets are shown; they do not delete packets from the capture.
+> Display filters do not remove packets from the capture; they only hide or show specific ones.
 
-### Step 7: Analyze the Packets
-1. Apply different display filters.
-2. Observe the protocols involved in the captured communication.
-3. Compare the source and destination addresses.
-4. Inspect packet lengths and timestamps.
-5. Examine TCP connection activity and DNS queries where available.
-6. Record your observations.
+## Analysis Steps
 
-The packets displayed depend on your network activity. Some protocols may not appear in every capture.
+1. Apply a few display filters.
+2. Compare packet source and destination addresses.
+3. Inspect packet timing and lengths.
+4. Review DNS requests and responses.
+5. Observe TCP connection behavior.
+6. Record findings relevant to the lab.
 
-### Step 8: Stop the Capture
-Click the red **Stop** button on the Wireshark toolbar to stop capturing packets.
+The packets shown depend on your network activity. Some protocols may not appear in every capture.
 
-### Step 9: Save the Capture File
-1. Click **File → Save As**.
-2. Select a destination folder.
-3. Enter a filename, for example:
+## Stopping and Saving the Capture
+
+### Stop the capture
+
+Click the red stop button in the Wireshark toolbar.
+
+### Save the file
+
+1. Go to File → Save As
+2. Choose a destination folder
+3. Name the file, for example:
 
 ```text
 experiment1_capture.pcapng
 ```
 
-4. Save the file in `.pcapng` format.
+4. Save in `.pcapng` format
 
-The saved capture can be reopened in Wireshark for future analysis.
+The capture can be reopened later for further review.
 
-## Important Display Filters
+## Common Display Filters
 
-| Protocol / Purpose | Display Filter |
+| Purpose | Filter |
 |---|---|
 | TCP | `tcp` |
 | UDP | `udp` |
@@ -157,43 +191,54 @@ The saved capture can be reopened in Wireshark for future analysis.
 | ICMP | `icmp` |
 | HTTP | `http` |
 | HTTPS / TLS | `tls` |
-| IPv4 traffic | `ip` |
-| IPv6 traffic | `ipv6` |
+| IPv4 | `ip` |
+| IPv6 | `ipv6` |
 | ARP | `arp` |
-| Traffic for an IP address | `ip.addr == 192.168.1.10` |
+| Specific IP | `ip.addr == 192.168.1.10` |
 
 ## Sample Observation Table
 
 | Sl. No. | Protocol | Source | Destination | Observation |
 |---|---|---|---|---|
-| 1 | DNS | Local system | DNS resolver | DNS query or response observed |
-| 2 | TCP | Local system | Remote host | TCP communication observed |
+| 1 | DNS | Local system | DNS resolver | Query or response observed |
+| 2 | TCP | Local system | Remote host | Communication observed |
 | 3 | UDP | Local system | Remote host | UDP packet observed |
-| 4 | ICMP | Depends on the test | Depends on the test | ICMP packet observed, if generated |
+| 4 | ICMP | Test system | Target host | Ping packet observed |
 
-*This is a sample format. Record actual values and observations from your own capture.*
+> Use actual data from your capture rather than sample values when preparing the report.
 
 ## Result
-Network traffic was captured and analyzed successfully using Wireshark. Different network protocols were examined using display filters, individual packet details were inspected, and the captured traffic was saved in `.pcapng` format for future reference.
+
+Network traffic was successfully captured and analyzed using Wireshark. Protocols were observed through packet inspection, display filters were applied, and packet details were reviewed to understand the network communication occurring on the authorized test environment.
 
 ## Conclusion
-This experiment provided practical knowledge of network packet capture and analysis. It helped demonstrate how Wireshark can be used to inspect network protocols, understand TCP/IP communication, and support network troubleshooting and cybersecurity investigations.
+
+This experiment introduced practical packet analysis using Wireshark. It helped demonstrate how network traffic is captured, how protocols are identified, and how packet data can be inspected to understand communication behavior in a network.
 
 ## Learning Outcomes
+
 - Learned how to capture live network traffic.
-- Understood the information displayed in packet lists.
-- Practiced applying Wireshark display filters.
-- Examined packet headers and protocol details.
-- Learned to save and reopen packet capture files.
-- Gained introductory experience with network analysis.
+- Understood packet list information.
+- Practiced Wireshark display filters.
+- Examined protocol headers and packet details.
+- Saved packet captures for later analysis.
+- Gained a foundational understanding of network analysis.
 
 ## Safety and Ethical Guidelines
+
 - Capture traffic only on networks and devices you own or are authorized to test.
 - Do not collect or share other people's private network data.
 - Store packet captures securely because they may contain sensitive information.
-- Use the experiment for educational, troubleshooting, and authorized security testing purposes.
+- Use this lab only for educational, troubleshooting, or authorized security testing purposes.
 
 ## References
+
 - Wireshark Official Website: https://www.wireshark.org/
 - Wireshark User's Guide: https://www.wireshark.org/docs/wsug_html_chunked/
 - Wireshark Display Filter Reference: https://www.wireshark.org/docs/dfref/
+
+## Project Summary
+
+- Project: Network Traffic Capture and Analysis Using Wireshark
+- Platform: Kali Linux
+- Tool: Wireshark
