@@ -1,88 +1,96 @@
-# Ethical Hacking Lab 4: Network Scanning Using Nmap and Vulnerability Assessment
+# Ethical Hacking Lab 4: Network Scanning Using Nmap
 
-## Aim
+A practical cybersecurity lab focused on network discovery, host enumeration, port scanning, service detection, and vulnerability assessment using Nmap and Nessus.
 
-To utilize Nmap to discover live hosts, identify open ports, detect services and operating systems, and understand vulnerability assessment using Nessus.
+This project demonstrates how ethical hackers and security analysts use Nmap to study live hosts, identify open ports, detect services, estimate the operating system, and document scan results in an authorized environment.
 
 ## Overview
 
-Network scanning is an important activity in ethical hacking and cybersecurity. It helps security professionals understand which devices are reachable on a network, which ports are exposed, and which services are running.
+Network scanning is a critical part of ethical hacking and cybersecurity assessments. It helps security professionals determine which systems are reachable on a network, which services are exposed, and which ports may require further inspection.
 
-In this experiment, Nmap is used to perform network discovery, port scanning, service detection, operating system detection, and scan result reporting. Nessus is introduced for identifying potential security vulnerabilities in authorized systems.
+In this lab, Nmap is used to:
+
+- discover active hosts
+- identify open ports
+- detect running services and versions
+- estimate the operating system
+- save scan results for reporting
+
+Nessus is also introduced to show how vulnerability assessment complements network scanning by identifying potential security weaknesses.
+
+## Objectives
+
+- Install and verify Nmap in Kali Linux.
+- Check network configuration and identify the active network range.
+- Discover live hosts on an authorized lab network.
+- Perform basic and targeted port scans.
+- Detect services and software versions.
+- Attempt OS detection.
+- Save scan output for documentation.
+- Understand how Nessus fits into vulnerability assessment.
 
 ## Tools and Technologies
 
-- **Kali Linux:** Operating system used for cybersecurity testing.
-- **Nmap:** Network discovery and port-scanning tool.
-- **Nessus:** Vulnerability assessment software developed by Tenable.
-- **Terminal:** Used to execute commands and analyze scan results.
+- Kali Linux
+- Nmap
+- Nessus
+- Terminal
+- Authorized lab environment
 
 ## Prerequisites
 
-- Kali Linux installed on a physical machine or virtual machine.
-- Nmap installed and working.
-- Basic knowledge of IP addresses, network interfaces, and ports.
-- An authorized lab network and target machine.
-- Nessus installed and activated for the vulnerability assessment section.
+- Kali Linux installed on a physical or virtual machine
+- Nmap installed and working
+- Basic knowledge of IP addresses, ports, and network interfaces
+- Access to an authorized lab network and target system
+- Nessus installed and activated for the vulnerability assessment section
 
-## Experiment Steps
+## Installation and Setup
 
-### Step 1: Check Nmap Installation
+### 1. Check Nmap installation
 
 ```bash
 nmap --version
 ```
 
-**Purpose:** Displays the installed Nmap version and confirms that the command is available.
-
-If Nmap is not installed, use:
+If Nmap is not installed, run:
 
 ```bash
 sudo apt update
 sudo apt install nmap -y
 ```
 
-### Step 2: Check Network Configuration
+### 2. Check network configuration
 
 ```bash
 ip addr
 ```
 
-**Purpose:** Displays network interfaces and their assigned IP addresses.
-
-Example:
+This command shows active interfaces and assigned IP addresses. For example:
 
 ```text
 inet 10.0.2.15/24
 ```
 
-Here, `10.0.2.15` is an example IP address, and `/24` is the network prefix.
-
-### Step 3: Identify the Connected Network
+### 3. Identify the connected network
 
 ```bash
 ip route
 ```
 
-**Purpose:** Displays routing information and helps identify the network connected to Kali Linux.
-
-Example:
+This helps determine the route and network range used by the machine. Example:
 
 ```text
 10.0.2.0/24 dev eth0
 ```
 
-Use the network range reported by your own machine rather than assuming that the example network applies to your setup.
+## Discovering Live Hosts
 
-### Step 4: Discover Live Hosts
+To find reachable hosts in the local lab network:
 
 ```bash
 nmap -sn <LAB-NETWORK>/24
 ```
-
-**Purpose:** Discovers reachable hosts without performing a port scan.
-
-Replace `<LAB-NETWORK>` with the appropriate network address for your authorized lab.
 
 Example:
 
@@ -90,13 +98,15 @@ Example:
 nmap -sn 10.0.2.0/24
 ```
 
-### Step 5: Perform a Basic Port Scan
+This is a host-discovery scan and does not inspect ports.
+
+## Basic Network Scanning
+
+### 1. Perform a basic port scan
 
 ```bash
 nmap <TARGET-IP>
 ```
-
-**Purpose:** Scans commonly used TCP ports on the specified target.
 
 Example:
 
@@ -104,169 +114,158 @@ Example:
 nmap 10.0.2.20
 ```
 
-Replace the example IP with the address of your authorized target.
-
-### Step 6: Display Open Ports
+### 2. Display only open ports
 
 ```bash
 nmap --open <TARGET-IP>
 ```
 
-**Purpose:** Displays only ports identified as open.
-
-### Step 7: Scan a Specific Port
+### 3. Scan a specific port
 
 ```bash
 nmap -p 80 <TARGET-IP>
 ```
 
-**Purpose:** Scans TCP port 80, commonly associated with HTTP.
-
-### Step 8: Scan Multiple Ports
+### 4. Scan multiple ports
 
 ```bash
 nmap -p 22,80,443 <TARGET-IP>
 ```
 
-**Purpose:** Scans selected TCP ports commonly associated with SSH, HTTP, and HTTPS.
-
-### Step 9: Scan a Port Range
+### 5. Scan a range of ports
 
 ```bash
 nmap -p 1-100 <TARGET-IP>
 ```
 
-**Purpose:** Scans TCP ports from 1 through 100.
-
-### Step 10: Perform a Fast Scan
+### 6. Perform a fast scan
 
 ```bash
 nmap -F <TARGET-IP>
 ```
 
-**Purpose:** Scans a smaller list of commonly used ports to obtain a quick overview.
+## Service and Version Detection
 
-### Step 11: Detect Services and Versions
+### Detect services and versions
 
 ```bash
 nmap -sV <TARGET-IP>
 ```
 
-**Purpose:** Attempts to identify the services and software versions running on open ports.
+This helps identify the software and version running on open ports.
 
-### Step 12: Detect the Operating System
+## Operating System Detection
+
+### Attempt OS detection
 
 ```bash
 sudo nmap -O <TARGET-IP>
 ```
 
-**Purpose:** Attempts to estimate the target operating system using network responses. OS detection may require suitable privileges and may not always be accurate.
+OS detection is best-effort and may not always be accurate, especially if the target is protected or uses non-standard responses.
 
-### Step 13: Perform Combined Detection
+### Combined detection
 
 ```bash
 sudo nmap -sV -O <TARGET-IP>
 ```
 
-**Purpose:** Performs service/version detection and operating system detection together.
-
-### Step 14: Save Nmap Results
+## Saving Scan Results
 
 ```bash
 sudo nmap -sV -O <TARGET-IP> -oN nmap_result.txt
 ```
 
-**Purpose:** Saves the scan output in a normal text file named `nmap_result.txt`.
-
-View the saved results:
+Display the saved output:
 
 ```bash
 cat nmap_result.txt
 ```
 
-Check the current directory:
+Check the current working directory:
 
 ```bash
 pwd
 ```
 
-### Step 15: Vulnerability Assessment Using Nessus
+## Vulnerability Assessment with Nessus
 
-Nessus is a vulnerability assessment tool that helps identify potential security weaknesses in systems and services.
+Nessus is a vulnerability assessment tool that helps identify weaknesses in systems and services that may have been exposed by scanning.
 
-General procedure:
+### General workflow
 
 1. Install a supported Nessus edition from the official Tenable website.
 2. Complete setup and activation according to the selected edition.
-3. Open the Nessus web interface, commonly available at `https://localhost:8834` for a local installation.
-4. Create a basic network scan.
-5. Enter the IP address of an authorized lab target.
-6. Start the scan and wait for the results.
-7. Review the identified vulnerabilities, severity ratings, affected services, and recommended remediation.
-8. Record the findings for the lab report.
+3. Open the Nessus web interface, usually on `https://localhost:8834`.
+4. Create a basic scan.
+5. Enter the IP address of an authorized target.
+6. Start the scan and review results.
+7. Record vulnerabilities, severity ratings, affected services, and recommended remediation steps.
 
-Official website: https://www.tenable.com/products/nessus
+Official site:
 
-**Note:** Nessus is proprietary software, not open-source software. Its available features depend on the edition and license.
+https://www.tenable.com/products/nessus
+
+> Note: Nessus is proprietary software and its feature set depends on the edition and license used.
 
 ## Nmap Command Reference
 
 | Command | Purpose |
 |---|---|
-| `nmap --version` | Check Nmap version |
+| `nmap --version` | Check installed version |
 | `ip addr` | Display IP addresses and interfaces |
-| `ip route` | Display network routes |
+| `ip route` | Display routing information |
 | `nmap -sn <NETWORK>` | Discover live hosts |
 | `nmap <TARGET-IP>` | Perform a basic port scan |
-| `nmap --open <TARGET-IP>` | Display open ports only |
-| `nmap -p 80 <TARGET-IP>` | Scan port 80 |
+| `nmap --open <TARGET-IP>` | Show only open ports |
+| `nmap -p 80 <TARGET-IP>` | Scan a specific port |
 | `nmap -p 22,80,443 <TARGET-IP>` | Scan selected ports |
-| `nmap -p 1-100 <TARGET-IP>` | Scan ports 1–100 |
-| `nmap -F <TARGET-IP>` | Perform a fast scan |
-| `nmap -sV <TARGET-IP>` | Detect services and versions |
+| `nmap -p 1-100 <TARGET-IP>` | Scan a range of ports |
+| `nmap -F <TARGET-IP>` | Run a fast scan |
+| `nmap -sV <TARGET-IP>` | Detect service and version |
 | `sudo nmap -O <TARGET-IP>` | Attempt OS detection |
 | `sudo nmap -sV -O <TARGET-IP>` | Combine service and OS detection |
-| `sudo nmap -sV -O <TARGET-IP> -oN nmap_result.txt` | Save scan results |
-| `cat nmap_result.txt` | Display saved results |
+| `sudo nmap -sV -O <TARGET-IP> -oN nmap_result.txt` | Save output to a file |
+| `cat nmap_result.txt` | View saved results |
 
-## Understanding Port States
+## Port States Explained
 
 | State | Meaning |
 |---|---|
-| Open | A service is accepting connections on the port. |
-| Closed | The target is reachable, but no service is listening on the port. |
-| Filtered | Filtering prevents Nmap from determining whether the port is open or closed. |
+| Open | The port is accepting connections |
+| Closed | The target is reachable but no service is listening |
+| Filtered | A firewall or filter prevents Nmap from determining the port state |
 
-An open port does not automatically indicate a vulnerability. Further assessment is required to determine whether the service is misconfigured, outdated, or exposed to a known security issue.
+An open port does not automatically prove a vulnerability. It only indicates that a service is reachable and may require deeper assessment.
 
-## Result and Observations
+## Results and Observations
 
-During the experiment:
+During the experiment, the following tasks were performed:
 
-- Network interfaces and IP addresses were examined.
-- The connected network was identified using routing information.
-- Host discovery was performed on an authorized lab network.
-- TCP ports were scanned to identify their states.
-- Service and version detection was performed.
-- Operating system detection was attempted.
-- Nmap results were saved to a text file.
-- The Nessus vulnerability assessment workflow was studied or performed, depending on the lab setup.
+- network interfaces and IP addresses were checked
+- the active network was identified
+- live hosts were discovered on an authorized lab network
+- open ports were identified
+- service and version detection was performed
+- operating system detection was attempted
+- report data was saved in a text file
+- vulnerability assessment workflow using Nessus was reviewed
 
-**Actual results:** Record the IP addresses, open ports, service versions, and Nessus findings observed in your own experiment. Example outputs in this README are illustrative and are not guaranteed scan results.
+Actual results should be recorded from the lab environment being used. Any examples in this document are illustrative only and should not be treated as confirmed findings.
 
 ## Conclusion
 
-The experiment demonstrates how Nmap can be used for network discovery, port scanning, service identification, operating system estimation, and scan result documentation. Nessus provides an additional approach to vulnerability assessment by identifying potential security weaknesses and suggesting remediation measures.
+This lab demonstrates how Nmap can be used for host discovery, port scanning, service identification, operating system estimation, and result documentation. Nessus extends this workflow by helping identify likely vulnerabilities in authorized systems.
 
-These techniques help cybersecurity professionals understand network exposure and improve the security of authorized systems.
+These techniques give cybersecurity professionals a practical understanding of how networks and services are exposed and how the information can be used to improve system security.
 
 ## Ethical and Safety Guidelines
 
-- Scan only systems and networks for which you have permission.
-- Use a dedicated lab environment for practical testing.
-- Do not treat open ports as proof of vulnerabilities.
+- Scan only systems and networks for which you have explicit authorization.
+- Prefer a lab or isolated environment for practical testing.
+- Do not treat open ports as proof of compromise.
 - Verify vulnerability findings before drawing conclusions.
-- Keep scan reports secure because they may contain sensitive network information.
+- Protect scan reports because they may contain sensitive network information.
 
 ## References
 
@@ -275,9 +274,9 @@ These techniques help cybersecurity professionals understand network exposure an
 - Tenable Nessus: https://www.tenable.com/products/nessus
 - Kali Linux Documentation: https://www.kali.org/docs/
 
----
+## Project Summary
 
-**Experiment:** Ethical Hacking Lab 4  
-**Topic:** Network Scanning Using Nmap and Vulnerability Assessment  
-**Platform:** Kali Linux  
-**Tools:** Nmap and Nessus
+- Project: Ethical Hacking Lab 4
+- Topic: Network Scanning Using Nmap and Vulnerability Assessment
+- Platform: Kali Linux
+- Tools: Nmap and Nessus
